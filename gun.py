@@ -1,18 +1,19 @@
 import pygame
+from bullet import Bullet
 import math
-
+        
 class Gun():
-    def __init__(self, game):
-        self.game = game
-        self.player = self.game.player
+    def __init__(self, screen, player):
+        self.screen = screen
+        self.player = player
         self.pos = self.player.pos
-        self.image = pygame.transform.scale(pygame.image.load("gun2.png").convert_alpha().convert(), (50,10))
+        self.image = pygame.transform.scale(pygame.image.load("gun2.png").convert().convert_alpha(), (50,10))
         self.rect = self.image.get_rect()
         self.rect.topleft = self.pos
         self.angle = 0
         
     def draw(self):
-        self.game.screen.blit(self.image, self.rect)
+        self.screen.blit(self.image, self.rect)
     def update_pos(self, player_pos):
         self.rect.topleft = player_pos
         self.pos = player_pos
@@ -32,10 +33,17 @@ class Gun():
         rotated_image = pygame.transform.rotate(self.image, angle)
         rotated_image_rect = rotated_image.get_rect(center = rotated_image_center)
         self.rect = rotated_image_rect
-        self.game.screen.blit(rotated_image, rotated_image_rect)
+        self.screen.blit(rotated_image, rotated_image_rect)
         self.angle = angle
-    def shoot(self):
-        pass
+#         pos = game.player.rect.center
+#         a = Vector2(pos)
+#         b = Vector2(pygame.mouse.get_pos())
+#         self.angle = Vector2().angle_to(a-b) + 180
+#         self.image = pygame.transform.rotate(self.image,self.angle)
+#         self.rect = self.image.get_rect()
+#         self.rect.center = self.player.rect.center
+#         self.screen.blit(self.image,self.rect)
+        print("gun",self.angle)
     def update(self, player_pos):
         self.update_pos(player_pos)
         self.update_angle()

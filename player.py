@@ -1,13 +1,16 @@
 import pygame
+from gun import *
 
 class Player():
     def __init__(self, game):
         self.pos = (600,350)
         self.game = game
-        self.image = pygame.transform.scale(pygame.image.load("playermode3.png").convert_alpha(), (50,50))
+        self.image = pygame.transform.scale(pygame.image.load("Player3.png").convert_alpha(), (50,50))
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
         self.angle = 90
+        self.gun = Gun(self.game.screen, self)
+        self.bullet = False
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
@@ -28,10 +31,14 @@ class Player():
             self.angle = 90
     def draw(self):
         self.game.screen.blit(self.image, self.rect)
-    
+    def shoot(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            self.bullet = Bullet(self.game)
+        if self.bullet:
+            self.bullet.update(self.gun)
     def update(self):
+        self.shoot()
         self.move()
         self.draw()
-
-
-        
+        self.gun.update(self.rect.center)

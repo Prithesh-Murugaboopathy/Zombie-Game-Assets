@@ -1,7 +1,7 @@
 import pygame
-from player import Player
-from gun import Gun
-from bullet import Bullet
+from pygame.math import Vector2
+from random import random
+from player import *
 
 class Game():
     def __init__(self):
@@ -13,20 +13,15 @@ class Game():
         self.init_game()
     def init_game(self):
         self.player = Player(self)
-        self.gun = Gun(self)
-        self.bullet = Bullet(self)
-        
     def update(self):
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
             
-            self.screen.fill("dark green")
+            self.screen.fill((0,51,0))
             self.player.update()
-            self.bullet.update(self.gun)
-            self.gun.update(self.player.rect.center)
-            self.clock.tick(3)
+            self.clock.tick(60)
             pygame.display.update()
         pygame.quit()
 
